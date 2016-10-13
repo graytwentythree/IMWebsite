@@ -5,6 +5,7 @@
 	<title>IMWebsite</title>
 	<link rel="stylesheet" type="text/css" href="../CSS/Reset.css" />
 	<link rel="stylesheet" type="text/css" href="../CSS/About.css" />
+	<link rel="stylesheet" type="text/css" href="http://www.w3schools.com/lib/w3.css" />
 </head>
 <body>
 	<?php

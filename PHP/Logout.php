@@ -10,7 +10,8 @@
 <body>
 	<?php
 		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/PHP/header.php";
-		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/HTML/MainPage.html";
+		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/HTML/Logout.html";
+		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/PHP/EndSession.php";
 		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/PHP/footer.php";
 	?>
 </body>
