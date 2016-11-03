@@ -1,11 +1,11 @@
 <?php
-	if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['vpassword']) && $_POST['password'] == $_POST['vpassword']) {
+	if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['vpassword']) && $_POST['password'] == $_POST['vpassword'] && isset($_POST['displayName'])) {
 		try {
 			include "db.php";
 			$connection = new PDO(CONNECTIONSTRING, DBUSER, DBPASS);
 			$sql = "SELECT Username FROM users WHERE Username=". $_POST['username'];
 			if ($connection->query($sql) == FALSE) {
-				$sql = "INSERT INTO users(Username, Password) VALUES(\"". $_POST['username']. "\", \"". $_POST['password']. "\")";
+				$sql = "INSERT INTO users(Username, Password, DisplayName) VALUES(\"". $_POST['username']. "\", \"". $_POST['password']. "\", \"". $_POST['displayName']. "\");";
 				$connection->exec($sql);
 			} else {
 				header("Location: Register.php");
@@ -13,8 +13,8 @@
 		} catch (PDOException $e) {
 			die($e->getMessage());
 		}
-		header("Location: Login.php");
+		header("Location: Login.php?sid=". $_GET['sid']);
 	} else {
-		header("Location: Register.php");
+		header("Location: Register.php?sid=". $_GET['sid']);
 	}
 ?>

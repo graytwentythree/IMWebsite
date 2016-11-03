@@ -10,10 +10,14 @@
 <body>
 	<?php
 		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/PHP/header.php";
-		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/HTML/PostingBoard.html";
 		
 		include "db.php";
 		$connection = new PDO(CONNECTIONSTRING, DBUSER, DBPASS);
+		$sql = "SELECT Creator,Title,BoardID FROM postingBoards WHERE BoardID=". $_GET['board'];
+		$result = $connection->query($sql)->fetch();
+		echo "<h1>". $result['Title']. "</h1>\n";
+		echo "<h2>". $result['Creator']. "</h2>\n";
+		
 		echo "<table>\n";
 			echo "<thead>\n";
 				echo "<tr>\n";
@@ -22,38 +26,35 @@
 				echo "</tr>\n";
 			echo "</thead>\n";
 			echo "<tbody>\n";
-				$sql = "SELECT Creator,Title,BoardID FROM postingBoards";
+				$sql = "SELECT users.DisplayName,posts.Content FROM posts INNER JOIN users ON posts.Username=users.Username WHERE posts.BoardID=". $_GET['board'];
 				$result = $connection->query($sql);
 				foreach ($result as $row) {
 					echo "<tr>\n";
-						echo "<td><p>". $row['Creator']. "</p></td>\n";
-						echo "<td><a href=\"PostingBoardPage.php?";
-						if (isset($_GET['sid'])) {
-							echo "sid=". $_GET['sid']. "&";
-						}
-						echo "board=". $row['BoardID']. "\"><p>". $row['Title']. "</p></a></td>\n";
+						echo "<td><p>". $row['DisplayName']. ": </p></td>\n";
+						echo "<td><p>". $row['Content']. "</p></td>\n";
 					echo "</tr>\n";
 				}
 			echo "</tbody>\n";
 		echo "</table>\n";
 		
 		if (isset($_GET['sid'])) {
-			echo "<form method=\"post\" action=\"RegisterPostBoard.php?sid=". $_GET['sid']. "\">\n";
+			echo "<form method=\"post\" action=\"RegisterPost.php?sid=". $_GET['sid']. "&board=". $_GET['board']. "&uri=". $_SERVER['REQUEST_URI']. "\">\n";
 				echo "<fieldset>\n";
 					echo "<legend>\n";
-						echo "<h2 class=\"w3-container\">New Board</h2>\n";
+						echo "<h2 class=\"w3-container\">Post</h2>\n";
 					echo "</legend>\n";
 					echo "<p>\n";
-						echo "<input type=\"text\" name=\"title\" class=\"w3-input\" placeholder=\"Board Title\" />\n";
+						echo "<textarea name=\"post\" class=\"w3-input\" placeholder=\"Post Here\"></textarea>\n";
 					echo "</p>\n";
 					echo "<p>\n";
-						echo "<input type=\"submit\" value=\"Create New Board\"/>\n";
+						echo "<input type=\"submit\" value=\"Post\"/>\n";
 					echo "</p>\n";
 				echo "</fieldset>\n";
 			echo "</form>";
 		} else {
-			echo "<p>You must be signed in to create new boards.</p>\n";
+			echo "<p>You must be signed in to post.</p>\n";
 		}
+		
 		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/PHP/footer.php";
 	?>
 </body>

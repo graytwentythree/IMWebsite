@@ -3,13 +3,13 @@
 <footer>
 	<nav>
 		<?php
-			if (isset($_GET['sid'])) {
+			if (isset($_SESSION['username'])) {
 				echo "<ul class=\"w3-navbar w3-card-8\">";
 					echo "<li><a href=\"/IMWebsite/PHP/PostingBoard.php?sid=". $_GET['sid']. "\">Posting Board</a></li>\n";
 					echo "<li><a href=\"#\">Who's Online</a></li>\n";
 					echo "<li><a href=\"/IMWebsite/PHP/About.php?sid=". $_GET['sid']. "\">About</a></li>\n";
 					echo "<li class=\"w3-right w3-dropdown-hover\">";
-						echo "<a href=\"#\">". $_SESSION['nickName']. "</a>";
+						echo "<a href=\"#\">". $_SESSION['displayName']. "</a>";
 						echo "<div class=\"w3-dropdown-content w3-right\" style=\"right:0\">";
 							echo "<a href=\"/IMWebsite/PHP/Logout.php?sid=". $_GET['sid']. "\">Sign Out</a>";
 						echo "</div>";
