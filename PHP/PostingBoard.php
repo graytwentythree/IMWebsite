@@ -6,11 +6,18 @@
 	<link rel="stylesheet" type="text/css" href="../CSS/Reset.css" />
 	<link rel="stylesheet" type="text/css" href="../CSS/Main.css" />
 	<link rel="stylesheet" type="text/css" href="http://www.w3schools.com/lib/w3.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript"> 
+		window.jQuery || document.write('<script src="/jquery-1.9.1.min.js"><\/script>');
+	</script>
+	<script type="text/JavaScript" src="../JS/reloadPage.js"></script>
 </head>
 <body>
 	<?php
 		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/PHP/header.php";
 		include $_SERVER["DOCUMENT_ROOT"]. "/IMWebsite/HTML/PostingBoard.html";
+		
+		echo "<noscript>Your browser does not support JavaScript.  Without JavaScript you will not be able to see posts or posting boards in real time.</noscript>";
 		
 		include "db.php";
 		$connection = new PDO(CONNECTIONSTRING, DBUSER, DBPASS);

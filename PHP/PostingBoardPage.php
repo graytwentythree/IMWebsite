@@ -6,6 +6,11 @@
 	<link rel="stylesheet" type="text/css" href="../CSS/Reset.css" />
 	<link rel="stylesheet" type="text/css" href="../CSS/Main.css" />
 	<link rel="stylesheet" type="text/css" href="http://www.w3schools.com/lib/w3.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript"> 
+		window.jQuery || document.write('<script src="/jquery-1.9.1.min.js"><\/script>');
+	</script>
+	<script type="text/JavaScript" src="../JS/reloadPage.js"></script>
 </head>
 <body>
 	<?php
@@ -18,6 +23,8 @@
 		echo "<h1>". $result['Title']. "</h1>\n";
 		echo "<h2>". $result['Creator']. "</h2>\n";
 		
+		echo "<noscript>Your browser does not support JavaScript.  Without JavaScript you will not be able to see posts or posting boards in real time.</noscript>";
+		
 		echo "<table>\n";
 			echo "<thead>\n";
 				echo "<tr>\n";
@@ -25,7 +32,7 @@
 					echo "<td><p>Title</p></td>\n";
 				echo "</tr>\n";
 			echo "</thead>\n";
-			echo "<tbody>\n";
+			echo "<tbody class=\"postTableBody\">\n";
 				$sql = "SELECT users.DisplayName,posts.Content FROM posts INNER JOIN users ON posts.Username=users.Username WHERE posts.BoardID=". $_GET['board'];
 				$result = $connection->query($sql);
 				foreach ($result as $row) {
