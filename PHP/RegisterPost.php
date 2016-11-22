@@ -1,12 +1,10 @@
 <?php
-	if (isset($_GET['sid'])) {
-		session_start($_GET['sid']);
-	}
+	session_start();
 	if (isset($_SESSION['username'])) {
 		try {
 			include "db.php";
 			$connection = new PDO(CONNECTIONSTRING, DBUSER, DBPASS);
-			$sql = "INSERT INTO posts(Username,Content,BoardID) VALUES(\"". $_SESSION['username']. "\", \"". $_POST['post']. "\", ". $_GET['board']. ")";
+			$sql = "INSERT INTO posts(Creator,Content,BoardID) VALUES(\"". $_SESSION['userid']. "\", \"". utf8_encode($_POST['post']). "\", ". $_GET['board']. ")";
 			if (!$connection->exec($sql)) {
 				die("Error adding post");
 			}

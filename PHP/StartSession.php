@@ -3,19 +3,15 @@
 		try {
 			include "db.php";
 			$connection = new PDO(CONNECTIONSTRING, DBUSER, DBPASS);
-			$sql = "SELECT Username,Password,DisplayName FROM users WHERE Username=\"". $_POST['username']. "\"";
+			$sql = "SELECT Username,Password,DisplayName,UserID FROM users WHERE Username=\"". $_POST['username']. "\"";
 			$result = $connection->query($sql);
-			if ($connection->query($sql)->fetch()['Username'] == $_POST['username'] && $connection->query($sql)->fetch()['Password'] == $_POST['password']) {
+			if ($connection->query($sql)->fetch()['Username'] == $_POST['username'] && $connection->query($sql)->fetch()['Password'] == hash("sha256", $_POST['password'])) {
 				session_start();
 				$_SESSION = array();
+				$_SESSION['userid'] = $connection->query($sql)->fetch()['UserID'];
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['displayName'] = $connection->query($sql)->fetch()['DisplayName'];
-				$sql = "UPDATE users SET SessionID=\"". session_id(). "\" WHERE Username=\"". $_SESSION['username']. "\";";
-				if (!$connection->exec($sql)) {
-					session_unset();
-					die("Could not start session properly!");
-				}
-				header("Location: MainPage.php?sid=". session_id());
+				header("Location: MainPage.php");
 			} else {
 				header("Location: Login.php");
 			}

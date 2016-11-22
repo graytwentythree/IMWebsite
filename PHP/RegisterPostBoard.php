@@ -1,12 +1,16 @@
 <?php
-	if (isset($_GET['sid'])) {
-		session_start($_GET['sid']);
-	}
+	session_start();
 	if (isset($_SESSION['username'])) {
 		try {
 			include "db.php";
 			$connection = new PDO(CONNECTIONSTRING, DBUSER, DBPASS);
-			$sql = "INSERT INTO postingBoards(Creator,Title) VALUES(\"". $_SESSION['username']. "\", \"". $_POST['title']. "\")";
+			$sql = "INSERT INTO postingBoards(Creator,Title,Private) VALUES(\"". $_SESSION['userid']. "\", \"". $_POST['title']. "\", ";
+				if ($_POST['private'] == "on") {
+					$sql .= "TRUE";
+				} else {
+					$ql .= "FALSE";
+				}
+				$sql .= ")";
 			if (!$connection->exec($sql)) {
 				die("Error adding board");
 			}
